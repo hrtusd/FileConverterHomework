@@ -1,10 +1,5 @@
-﻿using FileConverterHomework.ConsoleClient.File;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileConverterHomework.ConsoleClient.Storage
 {
@@ -17,19 +12,18 @@ namespace FileConverterHomework.ConsoleClient.Storage
             RootPath = rootPath;
         }
 
-        public Document ReadFile(string name)
+        public byte[] ReadFile(string name)
         {
             try
             {
                 var path = Path.Combine(RootPath, name);
 
-                using (var fs = System.IO.File.OpenRead(path))
-                using (var sr = new StreamReader(fs))
-                {
-                    var input = sr.ReadToEnd();
-                }
+                using var fs = File.OpenRead(path);
+                using var ms = new MemoryStream();
+                
+                fs.CopyTo(ms);
 
-                return new Document
+                return ms.ToArray();
             }
             catch (Exception e)
             {
@@ -38,17 +32,16 @@ namespace FileConverterHomework.ConsoleClient.Storage
             }
         }
 
-        public bool WriteFile(string name, Document doc)
+        public bool WriteFile(string name, byte[] file)
         {
             try
             {
                 var path = Path.Combine(RootPath, name);
 
-                using (var fs = System.IO.File.OpenWrite(path))
-                using (var sw = new StreamWriter(fs))
-                {
-                    sw.Write(doc);
-                }
+                using var fs = File.OpenWrite(path);
+                using var ms = new MemoryStream(file);
+
+                ms.CopyTo(fs);
 
                 return true;
             }

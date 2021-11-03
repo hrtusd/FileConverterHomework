@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace FileConverterHomework.ConsoleClient.Converters
 {
@@ -9,7 +10,20 @@ namespace FileConverterHomework.ConsoleClient.Converters
     {
         public byte[] Convert(Document doc)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var ms = new MemoryStream();
+                
+                var serializer = new XmlSerializer(typeof(Document));
+                serializer.Serialize(ms, doc);
+
+                return ms.ToArray();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         public Document Parse(byte[] file)
