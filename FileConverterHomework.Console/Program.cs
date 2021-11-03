@@ -1,5 +1,6 @@
 ﻿using FileConverterHomework.ConsoleClient.Converters;
 using FileConverterHomework.ConsoleClient.Storage;
+using FileConverterHomework.ConsoleClient.Types;
 using System;
 
 namespace FileConverterHomework.ConsoleClient
@@ -21,6 +22,14 @@ namespace FileConverterHomework.ConsoleClient
             var output = outputConverter.Convert(document);
 
             outputStorage.WriteFile("Document.json", output);
+
+
+            //
+
+            Document.Load(inputStorage, "Document.xml")
+                .ParseWith(inputConverter)
+                .ConvertWith(outputConverter)
+                .SaveTo(outputStorage, "Document.json");
         }
     }
 }
