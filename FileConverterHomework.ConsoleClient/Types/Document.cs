@@ -1,6 +1,7 @@
 ﻿using FileConverterHomework.ConsoleClient.Converters;
 using FileConverterHomework.ConsoleClient.Storage;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 
 namespace FileConverterHomework.ConsoleClient.Types
 {
@@ -18,6 +19,16 @@ namespace FileConverterHomework.ConsoleClient.Types
             var doc = new Document
             {
                 Data = storage.ReadFile(name)
+            };
+
+            return doc;
+        }
+
+        public static async Task<Document> LoadFromAsync(IStorage storage, string name)
+        {
+            var doc = new Document
+            {
+                Data = await storage.ReadFileAsync(name)
             };
 
             return doc;
@@ -41,6 +52,11 @@ namespace FileConverterHomework.ConsoleClient.Types
         public static bool SaveTo(this Document doc, IStorage storage, string name)
         {
             return storage.WriteFile(name, doc.Data);
+        }
+
+        public static async Task<bool> SaveToAsync(this Document doc, IStorage storage, string name)
+        {
+            return await storage.WriteFileAsync(name, doc.Data);
         }
     }
 }

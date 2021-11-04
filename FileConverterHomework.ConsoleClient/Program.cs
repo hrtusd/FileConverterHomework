@@ -2,12 +2,13 @@
 using FileConverterHomework.ConsoleClient.Storage;
 using FileConverterHomework.ConsoleClient.Types;
 using System;
+using System.Threading.Tasks;
 
 namespace FileConverterHomework.ConsoleClient
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             IFileTypeConverter inputConverter = new JsonConverter();
             IFileTypeConverter outputConverter = new XmlConverter();
@@ -29,6 +30,13 @@ namespace FileConverterHomework.ConsoleClient
                 .ParseWith(inputConverter)
                 .ConvertWith(outputConverter)
                 .SaveTo(outputStorage, "out\\doc.xml");
+
+            var doc = await Document.LoadFromAsync(inputStorage, "in\\doc.json");
+            
+            var result = await doc
+                .ParseWith(inputConverter)
+                .ConvertWith(outputConverter)
+                .SaveToAsync(outputStorage, "out\\doc.xml");
         }
     }
 }
