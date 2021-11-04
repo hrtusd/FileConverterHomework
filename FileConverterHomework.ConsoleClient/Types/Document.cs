@@ -13,7 +13,7 @@ namespace FileConverterHomework.ConsoleClient.Types
         [IgnoreDataMember]
         public byte[] Data { get; set; }
 
-        public static Document Load(IStorage storage, string name)
+        public static Document LoadFrom(IStorage storage, string name)
         {
             var doc = new Document
             {

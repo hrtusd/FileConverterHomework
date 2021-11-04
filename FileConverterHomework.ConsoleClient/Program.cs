@@ -9,27 +9,26 @@ namespace FileConverterHomework.ConsoleClient
     {
         static void Main(string[] args)
         {
-            IFileTypeConverter inputConverter = new XmlConverter();
-            IFileTypeConverter outputConverter = new JsonConverter();
+            IFileTypeConverter inputConverter = new JsonConverter();
+            IFileTypeConverter outputConverter = new XmlConverter();
 
             IStorage inputStorage = new DiskStorage(Environment.CurrentDirectory);
             IStorage outputStorage = new DiskStorage(Environment.CurrentDirectory);
 
-            var file = inputStorage.ReadFile("Document.xml");
+            //var file = inputStorage.ReadFile("in\\doc.xml");
 
-            var document = inputConverter.Parse(file);
+            //var document = inputConverter.Parse(file);
 
-            var output = outputConverter.Convert(document);
+            //var output = outputConverter.Convert(document);
 
-            outputStorage.WriteFile("Document.json", output);
-
+            //outputStorage.WriteFile("out\\doc.json", output);
 
             //
 
-            Document.Load(inputStorage, "Document.xml")
+            Document.LoadFrom(inputStorage, "in\\doc.json")
                 .ParseWith(inputConverter)
                 .ConvertWith(outputConverter)
-                .SaveTo(outputStorage, "Document.json");
+                .SaveTo(outputStorage, "out\\doc.xml");
         }
     }
 }
