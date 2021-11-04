@@ -1,9 +1,7 @@
 ﻿using FileConverterHomework.ConsoleClient.Types;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace FileConverterHomework.ConsoleClient.Converters
 {
@@ -11,12 +9,43 @@ namespace FileConverterHomework.ConsoleClient.Converters
     {
         public byte[] Convert(Document doc)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var ms = new MemoryStream();
+                using var sw = new StreamWriter(ms);
+
+                var json = JsonConvert.SerializeObject(doc);
+
+                sw.Write(json);
+                sw.Flush();
+
+                var data = ms.ToArray();
+
+                return data;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         public Document Parse(byte[] file)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var ms = new MemoryStream(file);
+                using var sr = new StreamReader(ms);
+
+                var doc = JsonConvert.DeserializeObject(sr.ReadToEnd(), typeof(Document)) as Document;
+
+                return doc;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
     }
 }
