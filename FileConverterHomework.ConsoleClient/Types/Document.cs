@@ -1,5 +1,6 @@
 ﻿using FileConverterHomework.ConsoleClient.Converters;
 using FileConverterHomework.ConsoleClient.Storage;
+using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
@@ -16,22 +17,38 @@ namespace FileConverterHomework.ConsoleClient.Types
 
         public static Document LoadFrom(IStorage storage, string name)
         {
-            var doc = new Document
+            try
             {
-                Data = storage.ReadFile(name)
-            };
+                var doc = new Document
+                {
+                    Data = storage.ReadFile(name)
+                };
 
-            return doc;
+                return doc;
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static async Task<Document> LoadFromAsync(IStorage storage, string name)
         {
-            var doc = new Document
+            try
             {
-                Data = await storage.ReadFileAsync(name)
-            };
+                var doc = new Document
+                {
+                    Data = await storage.ReadFileAsync(name)
+                };
 
-            return doc;
+                return doc;
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine(e.Message);
+                throw;
+            }
         }
     }
 
@@ -39,24 +56,56 @@ namespace FileConverterHomework.ConsoleClient.Types
     {
         public static Document ConvertWith(this Document doc, IFileTypeConverter converter)
         {
-            doc.Data = converter.Convert(doc);
+            try
+            {
+                doc.Data = converter.Convert(doc);
 
-            return doc;
+                return doc;
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static Document ParseWith(this Document doc, IFileTypeConverter converter)
         {
-            return converter.Parse(doc.Data);
+            try
+            {
+                return converter.Parse(doc.Data);
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static bool SaveTo(this Document doc, IStorage storage, string name)
         {
-            return storage.WriteFile(name, doc.Data);
+            try
+            {
+                return storage.WriteFile(name, doc.Data);
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         public static async Task<bool> SaveToAsync(this Document doc, IStorage storage, string name)
         {
-            return await storage.WriteFileAsync(name, doc.Data);
+            try
+            {
+                return await storage.WriteFileAsync(name, doc.Data);
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine(e.Message);
+                throw;
+            }
         }
     }
 }

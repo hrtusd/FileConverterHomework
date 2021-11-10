@@ -25,18 +25,24 @@ namespace FileConverterHomework.ConsoleClient
             //outputStorage.WriteFile("out\\doc.json", output);
 
             //
-
-            Document.LoadFrom(inputStorage, "in\\doc.json")
+            try
+            {
+                Document.LoadFrom(inputStorage, "in\\doc.json")
                 .ParseWith(inputConverter)
                 .ConvertWith(outputConverter)
                 .SaveTo(outputStorage, "out\\doc.xml");
 
-            var doc = await Document.LoadFromAsync(inputStorage, "in\\doc.json");
-            
-            var result = await doc
-                .ParseWith(inputConverter)
-                .ConvertWith(outputConverter)
-                .SaveToAsync(outputStorage, "out\\doc.xml");
+                var doc = await Document.LoadFromAsync(inputStorage, "in\\doc.json");
+
+                var result = await doc
+                    .ParseWith(inputConverter)
+                    .ConvertWith(outputConverter)
+                    .SaveToAsync(outputStorage, "out\\doc.xml");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

@@ -23,10 +23,10 @@ namespace FileConverterHomework.ConsoleClient.Converters
 
                 return data;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -41,10 +41,10 @@ namespace FileConverterHomework.ConsoleClient.Converters
 
                 return doc;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
     }

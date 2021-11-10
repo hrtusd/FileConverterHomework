@@ -26,10 +26,10 @@ namespace FileConverterHomework.ConsoleClient.Storage
 
                 return ms.ToArray();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -46,10 +46,10 @@ namespace FileConverterHomework.ConsoleClient.Storage
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return false;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -66,10 +66,10 @@ namespace FileConverterHomework.ConsoleClient.Storage
 
                 return ms.ToArray();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -86,10 +86,10 @@ namespace FileConverterHomework.ConsoleClient.Storage
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return false;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
     }

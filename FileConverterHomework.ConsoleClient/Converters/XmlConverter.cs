@@ -19,10 +19,10 @@ namespace FileConverterHomework.ConsoleClient.Converters
 
                 return ms.ToArray();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
 
@@ -30,26 +30,25 @@ namespace FileConverterHomework.ConsoleClient.Converters
         {
             try
             {
-                using (var ms = new MemoryStream(file))
-                using (var sr = new StreamReader(ms))
+                using var ms = new MemoryStream(file);
+                using var sr = new StreamReader(ms);
+
+                var input = sr.ReadToEnd();
+
+                var xdoc = XDocument.Parse(input);
+
+                var doc = new Document
                 {
-                    var input = sr.ReadToEnd();
+                    Title = xdoc.Root.Element("title").Value,
+                    Text = xdoc.Root.Element("text").Value
+                };
 
-                    var xdoc = XDocument.Parse(input);
-
-                    var doc = new Document
-                    {
-                        Title = xdoc.Root.Element("title").Value,
-                        Text = xdoc.Root.Element("text").Value
-                    };
-
-                    return doc;
-                }
+                return doc;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.Message);
-                return null;
+                //Console.WriteLine(e.Message);
+                throw;
             }
         }
     }
