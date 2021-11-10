@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileConverterHomework.ConsoleClient.Types
 {
-    public class Document
+    public class Document : IComparable<Document>
     {
         public string Title { get; set; }
         public string Text { get; set; }
@@ -49,6 +49,11 @@ namespace FileConverterHomework.ConsoleClient.Types
                 //Console.WriteLine(e.Message);
                 throw;
             }
+        }
+
+        public int CompareTo(Document other)
+        {
+            return Title.Equals(other.Title) && Text.Equals(other.Text) ? 0 : 1;
         }
     }
 
